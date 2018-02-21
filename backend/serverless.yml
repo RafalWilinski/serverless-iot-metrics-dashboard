@@ -1,0 +1,105 @@
+service: serverless-iot-metrics-dashboard
+
+custom:
+  accountId: 085108115628
+  appSync:
+    apiId: l47kzdrb3zfhfegyjnpqr3kbse
+    name: serverless-iot-metrics-dashboard
+    authenticationType: API_KEY
+    serviceRole: "AppSyncServiceRole"
+    userPoolConfig:
+      awsRegion: us-east-1
+      defaultAction: ALLOW
+      userPoolId: us-east-1
+    mappingTemplates:
+      - dataSource: Metrics
+        type: Query
+        field: getDatapoints
+        request: "getDatapoints-request-mapping-template.txt"
+        response: "getDatapoints-response-mapping-template.txt"
+    schema: schema.graphql
+    dataSources:
+      - type: AMAZON_DYNAMODB
+        name: Metrics
+        description: Table containing all metrics
+        config:
+          tableName: 'Metrics'
+          serviceRoleArn: "arn:aws:iam::${self:custom.accountId}:role/Dynamo-${self:custom.appSync.serviceRole}"
+
+plugins:
+  - serverless-appsync-plugin
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+resources:
+  Resources:
+    IotMetricsAllowConnectAndPublicPolicy:
+      Type: "AWS::IoT::Policy"
+      Properties:
+        PolicyName: IotMetricsAllowConnectAndPublicPolicy
+        PolicyDocument: 
+          Version: "2012-10-17"
+          Statement: 
+            - 
+              Effect: "Allow"
+              Action: 
+                - "iot:Connect"
+                - "iot:Publish"
+              Resource: 
+                - "*"
+    IotMetricsPolicyPrincipalAttachment:
+      Type: "AWS::IoT::PolicyPrincipalAttachment"
+      Properties:
+        PolicyName: IotMetricsAllowConnectAndPublicPolicy
+        Principal: ${file(./certificateArn.yml):arn}
+    MetricsTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        KeySchema:
+          -
+            AttributeName: createdAt
+            KeyType: HASH
+        AttributeDefinitions:
+          -
+            AttributeName: createdAt
+            AttributeType: S
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+        TableName: "Metrics"
+    AppSyncServiceRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        RoleName: "Dynamo-AppSyncServiceRole"
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            -
+              Effect: "Allow"
+              Principal:
+                Service:
+                  - "appsync.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Policies:
+          -
+            PolicyName: "Dynamo-AppSyncServiceRole-Policy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                -
+                  Effect: "Allow"
+                  Action:
+                    - "dynamodb:Query"
+                    - "dynamodb:BatchWriteItem"
+                    - "dynamodb:GetItem"
+                    - "dynamodb:DeleteItem"
+                    - "dynamodb:PutItem"
+                    - "dynamodb:Scan"
+                    - "dynamodb:UpdateItem"
+                  Resource:
+                    - "arn:aws:dynamodb:us-east-1:*:table/Metrics"
+                    - "arn:aws:dynamodb:us-east-1:*:table/Metrics/*"
+                    

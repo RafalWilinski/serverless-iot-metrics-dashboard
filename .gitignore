@@ -1,0 +1,10 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+backend/.serverless
+
+# IoT Credentials
+collector/creds/
+backend/certificateArn.yml

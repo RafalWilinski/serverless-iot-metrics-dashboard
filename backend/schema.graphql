@@ -1,0 +1,12 @@
+type Query {
+  getDatapoints(key: String): Metric!
+}
+
+type Metric {
+  createdAt: String!
+  temperature: Int!
+}
+
+schema {
+	query: Query
+}
