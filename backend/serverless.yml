@@ -54,7 +54,7 @@ resources:
       Properties:
         RuleName: IotMetricsTopicRule
         TopicRulePayload:
-          RuleDisabled: "true"
+          RuleDisabled: "false"
           Sql: >-
             Select * FROM 'metrics'
           Actions: 
