@@ -49,6 +49,23 @@ resources:
                 - "iot:Publish"
               Resource: 
                 - "*"
+    IotMetricsTopicRule:
+      Type: "AWS::IoT::TopicRule"
+      Properties:
+        RuleName: IotMetricsTopicRule
+        TopicRulePayload:
+          RuleDisabled: "true"
+          Sql: >-
+            Select * FROM 'metrics'
+          Actions: 
+            - 
+              DynamoDBv2: 
+                PutItem:
+                  TableName: Metrics
+                RoleArn: 
+                  Fn::GetAtt: 
+                    - "IotTopicPutToDynamoDBServiceRole"
+                    - "Arn"
     IotMetricsPolicyPrincipalAttachment:
       Type: "AWS::IoT::PolicyPrincipalAttachment"
       Properties:
@@ -69,6 +86,32 @@ resources:
           ReadCapacityUnits: 2
           WriteCapacityUnits: 2
         TableName: "Metrics"
+    IotTopicPutToDynamoDBServiceRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        RoleName: "IotTopicPutToDynamoDBServiceRole"
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            -
+              Effect: "Allow"
+              Principal:
+                Service:
+                  - "iot.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Policies:
+          -
+            PolicyName: "IotTopicPutToDynamoDBServiceRole-Policy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                -
+                  Effect: "Allow"
+                  Action:
+                    - "dynamodb:PutItem"
+                  Resource:
+                    - "arn:aws:dynamodb:us-east-1:*:table/Metrics"
     AppSyncServiceRole:
       Type: "AWS::IAM::Role"
       Properties:

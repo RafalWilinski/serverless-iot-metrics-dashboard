@@ -1,6 +1,7 @@
 import time
 import logging
 import argparse
+import datetime
 
 from os import path
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
@@ -26,6 +27,7 @@ while True:
 
   message = {}
   message['temperature'] = 1
+  message['createdAt'] = datetime.datetime.now().isoformat()
   messageJson = json.dumps(message)
   myAWSIoTMQTTClient.publish(topic, messageJson, 1)
 

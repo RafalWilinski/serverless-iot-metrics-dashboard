@@ -20,3 +20,8 @@ cd backend && serverless deploy && serverless create-appsync
 `backend` - contains Serverless Framework based infrastructure
 `collector` - script gathering metrics from Raspberry Pi connected to the cloud
 `dashboard` - frontend for representing the data
+
+### Data flow
+1. Python based `collector` pushes metrics via MQTT protocol to AWS IoT
+2. AWS IoT uses IoT rule to push the data to AWS DynamoDB
+3. Data from DynamoDB can be queried via AWS AppSync
