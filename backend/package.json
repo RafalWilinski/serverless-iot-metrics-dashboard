@@ -1,0 +1,22 @@
+{
+  "name": "serverless-iot-metrics-dashboard-backend",
+  "version": "0.0.1",
+  "description": "Backend/Infrastructure part of serverless-iot-metrics-dashboard project.",
+  "dependencies": {
+    "serverless-appsync-plugin": "0.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RafalWilinski/serverless-iot-metrics-dashboard.git"
+  },
+  "keywords": [
+    "serverless",
+    "iot"
+  ],
+  "author": "Rafal Wilinski <http://rwilinski.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RafalWilinski/serverless-iot-metrics-dashboard/issues"
+  },
+  "homepage": "https://github.com/RafalWilinski/serverless-iot-metrics-dashboard#readme"
+}
