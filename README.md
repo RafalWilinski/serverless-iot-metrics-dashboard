@@ -12,8 +12,11 @@ cd serverless-iot-metrics-dashboard
 # Create X509 Certificates
 ./create-certificate.sh
 
-# Deploy
+# Deploy infrastructure to AWS
 cd backend && serverless deploy && serverless create-appsync
+
+# Start collector on Raspberry PI
+cd collector && python collector.py -e <YOUR_AWS_IOT_URL>
 ```
 
 ### Structure

@@ -1,4 +1,5 @@
 import time
+import json
 import logging
 import argparse
 import datetime
@@ -26,6 +27,16 @@ while True:
   time.sleep(1)
 
   message = {}
+
+  # from sense_hat import SenseHat
+
+  # sense = SenseHat()
+  # sense.clear()
+
+  # message['temperature'] = round(sense.get_temperature(), 3) * 1000
+  # message['pressure'] = round(sense.get_pressure(), 3) * 1000
+  # message['humidity'] = round(sense.get_humidity(), 3) * 1000
+
   message['temperature'] = 1
   message['createdAt'] = datetime.datetime.now().isoformat()
   messageJson = json.dumps(message)
