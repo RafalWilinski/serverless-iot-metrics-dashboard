@@ -5,10 +5,13 @@ import logging
 import argparse
 import datetime
 
+from sense_hat import SenseHat
 from os import path
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 
+sense = SenseHat()
 random.seed()
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-e", "--endpoint", action="store", required=True, dest="host", help="Your AWS IoT custom endpoint")
 parser.add_argument("-t", "--topic", action="store", dest="topic", default="metrics", help="Targeted topic")
@@ -29,18 +32,16 @@ while True:
   time.sleep(1)
 
   message = {}
+  sense.clear()
 
-  # from sense_hat import SenseHat
-
-  # sense = SenseHat()
-  # sense.clear()
-
-  # message['temperature'] = round(sense.get_temperature(), 3) * 1000
-  # message['pressure'] = round(sense.get_pressure(), 3) * 1000
-  # message['humidity'] = round(sense.get_humidity(), 3) * 1000
-
-  message['temperature'] = random.randint(20,30)
+  message['temperature'] = round(sense.get_temperature(), 3) * 1000
+  message['pressure'] = round(sense.get_pressure(), 3) * 1000
+  message['humidity'] = round(sense.get_humidity(), 3) * 1000
   message['createdAt'] = datetime.datetime.now().isoformat()
   messageJson = json.dumps(message)
-  myAWSIoTMQTTClient.publish(topic, messageJson, 1)
+
+  try:
+    myAWSIoTMQTTClient.publish(topic, messageJson, 1)
+  except:
+    print('Failed to send metrics...')
 

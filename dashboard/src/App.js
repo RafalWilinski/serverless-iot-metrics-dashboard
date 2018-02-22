@@ -37,8 +37,7 @@ class App extends Component {
     this.setState({ zoomDomain: domain });
   }
 
-  renderChart({ getDatapoints }) {
-    return (
+  renderChart = ({ getDatapoints }) => (
       <div>
         <VictoryChart
           width={window.innerWidth}
@@ -60,10 +59,11 @@ class App extends Component {
             data={
               getDatapoints.map(({ createdAt, temperature}) => ({
                 x: new Date(createdAt),
-                y: temperature,
+                y: temperature / 1000,
               }))
             }
           />
+  
         </VictoryChart>
 
         <VictoryChart
@@ -82,7 +82,6 @@ class App extends Component {
         >
           <VictoryAxis
             tickValues={ getDatapoints.map(({ createdAt }) => (new Date(createdAt))) }
-
           />
           <VictoryLine
             style={{
@@ -90,13 +89,12 @@ class App extends Component {
             }}
             data={getDatapoints.map(({ createdAt, temperature}) => ({
               x: new Date(createdAt),
-              y: temperature,
+              y: temperature / 1000,
             }))}
           />
         </VictoryChart>
       </div>
     );
-  }
 
   render() {
     return (
