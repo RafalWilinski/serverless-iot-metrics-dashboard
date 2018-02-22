@@ -12,8 +12,7 @@ import {
 import "./App.css";
 
 const client = new Client({
-  url:
-    "https://fv7sdsp65jev3ijlmwkbpiiawm.appsync-api.us-east-1.amazonaws.com/graphql",
+  url: process.env.REACT_APP_APPSYNC_URL,
   fetchOptions: {
     headers: {
       "X-Api-Key": process.env.REACT_APP_APPSYNC_API_KEY

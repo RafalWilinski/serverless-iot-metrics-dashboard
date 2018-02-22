@@ -29,7 +29,7 @@ cd dashboard
 mv .env.example .env
 
 ############################################
-# Paste your AppSync API KEY to .env file  #
+# Paste your AppSync API KEY and URL to .env file  #
 ############################################
 
 npm start
