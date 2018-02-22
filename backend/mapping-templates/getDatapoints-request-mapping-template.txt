@@ -1,12 +1,4 @@
 {
-  "version" : "2017-02-28",
-  "operation" : "Query",
-  "query" : {
-      "expression": "createdAt = :createdAt",
-      "expressionValues" : {
-          ":createdAt" : {
-              "S" : "${context.arguments.createdAt}"
-          }
-      }
-  }
+    "version" : "2017-02-28",
+    "operation" : "Scan"
 }

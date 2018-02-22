@@ -1,10 +1,10 @@
-type Query {
-  getDatapoints(key: String): Metric!
+type Metric {
+	createdAt: String!
+	temperature: Int!
 }
 
-type Metric {
-  createdAt: String!
-  temperature: Int!
+type Query {
+	getDatapoints: [Metric!]!
 }
 
 schema {

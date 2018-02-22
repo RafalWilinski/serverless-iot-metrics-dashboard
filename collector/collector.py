@@ -1,5 +1,6 @@
 import time
 import json
+import random
 import logging
 import argparse
 import datetime
@@ -7,6 +8,7 @@ import datetime
 from os import path
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 
+random.seed()
 parser = argparse.ArgumentParser()
 parser.add_argument("-e", "--endpoint", action="store", required=True, dest="host", help="Your AWS IoT custom endpoint")
 parser.add_argument("-t", "--topic", action="store", dest="topic", default="metrics", help="Targeted topic")
@@ -37,7 +39,7 @@ while True:
   # message['pressure'] = round(sense.get_pressure(), 3) * 1000
   # message['humidity'] = round(sense.get_humidity(), 3) * 1000
 
-  message['temperature'] = 1
+  message['temperature'] = random.randint(20,30)
   message['createdAt'] = datetime.datetime.now().isoformat()
   messageJson = json.dumps(message)
   myAWSIoTMQTTClient.publish(topic, messageJson, 1)
