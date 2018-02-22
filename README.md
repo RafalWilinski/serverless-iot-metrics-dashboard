@@ -4,6 +4,12 @@
 
 Goal of this project is to create Serverless & code-less (as possible) solution for gathering data from IoT sensors to the cloud without Lambda functions.
 
+### Prerequisites
+- AWS Account
+- Raspberry PI with SenseHAT
+- Node.js on dev machine
+- Python & SSL module on Raspberry
+
 ### Running the project
 ```
 git clone https://github.com/RafalWilinski/serverless-iot-metrics-dashboard
