@@ -22,6 +22,7 @@ cd collector && python collector.py -e <YOUR_AWS_IOT_URL>
 cd dashboard && npm start
 ```
 
+### Dashboard demo
 ![Dashboard](assets/dashboard.png?raw=true "Dashboard")
 
 ### Structure
