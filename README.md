@@ -25,7 +25,14 @@ cd backend && serverless deploy && serverless create-appsync
 cd collector && python collector.py -e <YOUR_AWS_IOT_URL>
 
 # Run dashboard on master computer
-cd dashboard && npm start
+cd dashboard
+mv .env.example .env
+
+############################################
+# Paste your AppSync API KEY to .env file  #
+############################################
+
+npm start
 ```
 
 ### Dashboard demo
