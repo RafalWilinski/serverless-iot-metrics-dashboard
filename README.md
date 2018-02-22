@@ -40,7 +40,9 @@ npm start
 
 ### Structure
 `backend` - contains Serverless Framework based infrastructure
+
 `collector` - script gathering metrics from Raspberry Pi connected to the cloud
+
 `dashboard` - frontend for representing the data
 
 ### Data flow
