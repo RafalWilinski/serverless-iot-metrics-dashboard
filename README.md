@@ -17,7 +17,12 @@ cd backend && serverless deploy && serverless create-appsync
 
 # Start collector on Raspberry PI
 cd collector && python collector.py -e <YOUR_AWS_IOT_URL>
+
+# Run dashboard on master computer
+cd dashboard && npm start
 ```
+
+![Dashboard](assets/dashboard.png?raw=true "Dashboard")
 
 ### Structure
 `backend` - contains Serverless Framework based infrastructure
@@ -25,6 +30,15 @@ cd collector && python collector.py -e <YOUR_AWS_IOT_URL>
 `dashboard` - frontend for representing the data
 
 ### Data flow
-1. Python based `collector` pushes metrics via MQTT protocol to AWS IoT
+1. Python based `collector` gets metrics from SenseHat and pushes them via MQTT protocol to AWS IoT
 2. AWS IoT uses IoT rule to push the data to AWS DynamoDB
-3. Data from DynamoDB can be queried via AWS AppSync
+3. Data from DynamoDB can be queried via AWS AppSync from React app
+
+### Credits
+Modules used:
+- [create-react-app](https://github.com/facebook/create-react-app)
+- [Victory Charts](https://github.com/FormidableLabs/victory-chart)
+- [urql](https://github.com/FormidableLabs/urql)
+
+### License
+MIT License © Rafal Wilinski

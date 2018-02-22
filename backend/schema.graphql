@@ -1,6 +1,8 @@
 type Metric {
 	createdAt: String!
 	temperature: Int!
+	humidity: Float!
+	pressure: Int!
 }
 
 type Query {
